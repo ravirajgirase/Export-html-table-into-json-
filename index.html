@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<style>
+table, th, td {
+  border:1px solid black;
+}
+</style>
+<body>
+
+<h2>A basic HTML table</h2>
+
+<table id="example-table" style="width:100%">
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Class</th>
+  </tr>
+  <tr>
+  	<td>1</td>
+    <td>Raviraj Girase</td>
+    <td>MCS</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Aniket Pawar</td>
+    <td>MCS</td>
+  </tr>
+   <tr>
+    <td>3</td>
+    <td>Amrendra Singh</td>
+    <td>MCS</td>
+  </tr>
+   <tr>
+    <td>4</td>
+    <td>Abhijit Wavhal</td>
+    <td>MCS</td>
+  </tr>
+   <tr>
+    <td>5</td>
+    <td>Saurab kale</td>
+    <td>MCS</td>
+  </tr>
+   <tr>
+   	<td>6</td>
+    <td>Yash Navle</td>
+    <td>MCS</td>
+  </tr>
+   <tr>
+    <td>7</td>
+    <td>Sarthak Takate</td>
+    <td>MCS</td>
+  </tr>
+   <tr>
+    <td>8</td>
+    <td>Gaurav Patil</td>
+    <td>MCS</td>
+  </tr>
+</table>
+
+<!-- <p>To undestand the example better, we have added borders to the table.</p> -->
+
+
+	<button id="d1-json">Download json file</button>
+
+<script type="text/javascript">
+	function tableToJson(table) {
+    var data = [];
+
+    // first row needs to be headers
+    var headers = [];
+    for (var i=0; i<table.rows[0].cells.length; i++) {
+        headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi,'');
+    }
+
+    // go through cells
+    for (var i=1; i<table.rows.length; i++) {
+
+        var tableRow = table.rows[i];
+        var rowData = {};
+
+        for (var j=0; j<tableRow.cells.length; j++) {
+
+            rowData[ headers[j] ] = tableRow.cells[j].innerHTML;
+
+        }
+
+        data.push(rowData);
+    }       
+
+    return data;
+}
+
+	var myjson = JSON.stringify(tableToJson(document.getElementById("example-table")));
+	console.log(myjson);
+
+	 function downloadObjectAsJson(exportObj, exportName){
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
+    var downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href",     dataStr);
+    downloadAnchorNode.setAttribute("download", exportName + ".json");
+    document.body.appendChild(downloadAnchorNode); // required for firefox
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+  }
+
+  document.getElementById('d1-json').onclick = function() {
+
+  	downloadObjectAsJson(myjson,'the-json-file');
+  }
+</script>
+</body>
+</html>
+
